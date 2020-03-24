@@ -19,7 +19,7 @@ public class ControlClass {
 	@Autowired
 	private IService connections;
 	
-	@GetMapping("/prueba")
+	@GetMapping("/tables")
 	public ResponseEntity<List<String>> findTablesAll() throws ClassNotFoundException, SQLException{
 		return new ResponseEntity<List<String>>(connections.getTablesAll(),HttpStatus.OK);
 	}

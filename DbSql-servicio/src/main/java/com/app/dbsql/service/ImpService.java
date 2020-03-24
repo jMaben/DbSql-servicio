@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import app.commons.models.entity.Connections;
+import ch.qos.logback.classic.Logger;
 
 @Service
 public class ImpService implements IService {
@@ -57,7 +58,7 @@ public class ImpService implements IService {
 				tableList.add(rs.getString("table_name"));
 			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
+			e.printStackTrace();
 		} finally {
 			disconnect();
 		}
