@@ -41,6 +41,7 @@ public class ImpService implements IService {
 
 		try {
 			connect(connec);
+			System.out.println("bien");
 			String query = "SELECT table_name FROM information_schema.tables WHERE table_schema = ?";
 			preparedStatement = dbCon.prepareStatement(query);
 			preparedStatement.setString(1, connec.getAlias());
