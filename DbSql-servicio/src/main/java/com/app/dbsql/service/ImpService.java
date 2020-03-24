@@ -17,21 +17,12 @@ import ch.qos.logback.classic.Logger;
 public class ImpService implements IService {
 	private Connection dbCon;
 	private PreparedStatement preparedStatement;
-	private Connections connec = new Connections();
+	// private Connections connec = new Connections();
 
-	private void connect() throws ClassNotFoundException, SQLException {
+	private void connect(Connections connec) throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		editarConnec();
 		String url = "jdbc:mysql://" + connec.getHost() + ":" + String.valueOf(connec.getPort()) + "/" + connec.getAlias() + "?serverTimezone=UTC";
 		dbCon = DriverManager.getConnection(url, connec.getUser(), connec.getPass());
-	}
-
-	private void editarConnec() {
-		this.connec.setHost("localhost");
-		this.connec.setPort(3306);
-		this.connec.setUser("root");
-		this.connec.setPass("root");
-		this.connec.setAlias("erd_connections");
 	}
 
 	private void disconnect() throws SQLException {
@@ -44,12 +35,12 @@ public class ImpService implements IService {
 	}
 
 	@Override
-	public List<String> getTablesAll() throws ClassNotFoundException, SQLException {
+	public List<String> getTablesAll(Connections connec) throws ClassNotFoundException, SQLException {
 		ResultSet rs = null;
 		List<String> tableList = new ArrayList<String>();
 
 		try {
-			connect();
+			connect(connec);
 			String query = "SELECT table_name FROM information_schema.tables WHERE table_schema = ?";
 			preparedStatement = dbCon.prepareStatement(query);
 			preparedStatement.setString(1, connec.getAlias());
