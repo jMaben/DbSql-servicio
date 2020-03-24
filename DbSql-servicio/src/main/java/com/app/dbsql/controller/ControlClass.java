@@ -30,7 +30,6 @@ public class ControlClass {
 			@PathVariable String user, @PathVariable String pass, @PathVariable String alias)
 			throws ClassNotFoundException, SQLException {
 		Connections connection = new Connections();
-		System.out.println(host + port +user +pass + alias);
 		connection = convertToConnection(host, port, user, pass, alias);
 		return new ResponseEntity<List<String>>(connections.getTablesAll(connection), HttpStatus.OK);
 	}

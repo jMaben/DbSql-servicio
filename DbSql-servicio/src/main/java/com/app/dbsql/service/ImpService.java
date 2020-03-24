@@ -17,7 +17,6 @@ import ch.qos.logback.classic.Logger;
 public class ImpService implements IService {
 	private Connection dbCon;
 	private PreparedStatement preparedStatement;
-	// private Connections connec = new Connections();
 
 	private void connect(Connections connec) throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
@@ -41,7 +40,6 @@ public class ImpService implements IService {
 
 		try {
 			connect(connec);
-			System.out.println("bien");
 			String query = "SELECT table_name FROM information_schema.tables WHERE table_schema = ?";
 			preparedStatement = dbCon.prepareStatement(query);
 			preparedStatement.setString(1, connec.getAlias());
