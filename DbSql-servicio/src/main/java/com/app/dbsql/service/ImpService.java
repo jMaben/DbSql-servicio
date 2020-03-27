@@ -7,21 +7,31 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.stereotype.Service;
 
 import app.commons.models.entity.Connections;
-import ch.qos.logback.classic.Logger;
 
 @Service
 public class ImpService implements IService {
 	private Connection dbCon;
 	private PreparedStatement preparedStatement;
+	private static final Logger logger = Logger.getLogger(ImpService.class.getName());
 
-	private void connect(Connections connec) throws ClassNotFoundException, SQLException {
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		String url = "jdbc:mysql://" + connec.getHost() + ":" + String.valueOf(connec.getPort()) + "/" + connec.getAlias() + "?serverTimezone=UTC";
-		dbCon = DriverManager.getConnection(url, connec.getUser(), connec.getPass());
+	private void connect(Connections connec) throws SQLException, ClassNotFoundException {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://" + connec.getHost() + ":" + String.valueOf(connec.getPort()) + "/"
+					+ connec.getAlias() + "?serverTimezone=UTC";
+			dbCon = DriverManager.getConnection(url, connec.getUser(), connec.getPass());
+		} catch (SQLException e) {
+			throw new SQLException(e);
+		} catch (ClassNotFoundException e) {
+			throw new ClassNotFoundException();
+		}
+
 	}
 
 	private void disconnect() throws SQLException {
@@ -34,7 +44,7 @@ public class ImpService implements IService {
 	}
 
 	@Override
-	public List<String> getTablesAll(Connections connec) throws ClassNotFoundException, SQLException {
+	public List<String> getTablesAll(Connections connec) {
 		ResultSet rs = null;
 		List<String> tableList = new ArrayList<String>();
 
@@ -48,11 +58,19 @@ public class ImpService implements IService {
 				tableList.add(rs.getString("table_name"));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.info("Logger Name: " + logger.getName());
+			logger.warning("Cause Fail to connect");
+			logger.log(Level.SEVERE, "Exception occur", e);
 		} finally {
-			disconnect();
+			try {
+				disconnect();
+			} catch (SQLException e) {
+				logger.info("Logger Name: " + logger.getName());
+				logger.warning("Cause Fail to disconnect");
+				logger.log(Level.SEVERE, "Exception occur", e);
+			}
 		}
-
 		return tableList;
 	}
+
 }
