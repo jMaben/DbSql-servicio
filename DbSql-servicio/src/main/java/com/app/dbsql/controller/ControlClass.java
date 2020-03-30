@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.app.dbsql.service.IService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 import app.commons.models.entity.Connections;
 
@@ -24,6 +25,7 @@ public class ControlClass {
 	private IService connections;
 
 	
+	//@HystrixCommand(fallbackMethod = "alternativeMethod")
 	@CrossOrigin
 	@GetMapping("/tables/{host}/{port}/{user}/{pass}/{alias}")
 	public ResponseEntity<List<String>> findTablesAll(@PathVariable String host, @PathVariable Integer port,
@@ -34,6 +36,10 @@ public class ControlClass {
 		return new ResponseEntity<List<String>>(connections.getTablesAll(connection), HttpStatus.OK);
 	}
 
+	public ResponseEntity<List<String>> alternativeMethod() {
+		return new ResponseEntity<List<String>>(HttpStatus.BAD_REQUEST);	
+	}
+	
 	public Connections convertToConnection(String host, Integer port, String user, String pass, String alias) {
 		Connections connection = new Connections();
 		connection.setHost(host);
