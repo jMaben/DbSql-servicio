@@ -18,7 +18,6 @@ import app.commons.models.entity.Connections;
 public class ImpService implements IService {
 	private Connection dbCon;
 	private PreparedStatement preparedStatement;
-	private static final Logger logger = Logger.getLogger(ImpService.class.getName());
 
 	private void connect(Connections connec) throws SQLException, ClassNotFoundException {
 		try {
@@ -44,7 +43,7 @@ public class ImpService implements IService {
 	}
 
 	@Override
-	public List<String> getTablesAll(Connections connec) {
+	public List<String> getTablesAll(Connections connec) throws ClassNotFoundException, SQLException {
 		ResultSet rs = null;
 		List<String> tableList = new ArrayList<String>();
 
@@ -57,18 +56,10 @@ public class ImpService implements IService {
 			while (rs.next()) {
 				tableList.add(rs.getString("table_name"));
 			}
-		} catch (Exception e) {
-			logger.info("Logger Name: " + logger.getName());
-			logger.warning("Cause Fail to connect");
-			logger.log(Level.SEVERE, "Exception occur", e);
 		} finally {
-			try {
-				disconnect();
-			} catch (SQLException e) {
-				logger.info("Logger Name: " + logger.getName());
-				logger.warning("Cause Fail to disconnect");
-				logger.log(Level.SEVERE, "Exception occur", e);
-			}
+
+			disconnect();
+
 		}
 		return tableList;
 	}

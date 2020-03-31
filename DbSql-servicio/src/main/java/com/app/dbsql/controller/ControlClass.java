@@ -1,6 +1,7 @@
 package com.app.dbsql.controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class ControlClass {
 	private IService connections;
 
 	
-	//@HystrixCommand(fallbackMethod = "alternativeMethod")
+	@HystrixCommand(fallbackMethod = "alternativeMethod")
 	@CrossOrigin
 	@GetMapping("/tables/{host}/{port}/{user}/{pass}/{alias}")
 	public ResponseEntity<List<String>> findTablesAll(@PathVariable String host, @PathVariable Integer port,
@@ -36,8 +37,10 @@ public class ControlClass {
 		return new ResponseEntity<List<String>>(connections.getTablesAll(connection), HttpStatus.OK);
 	}
 
-	public ResponseEntity<List<String>> alternativeMethod() {
-		return new ResponseEntity<List<String>>(HttpStatus.BAD_REQUEST);	
+	@CrossOrigin
+	public ResponseEntity<List<String>> alternativeMethod(String host, Integer port, String user, String pass, String alias) {
+		List<String> res = new ArrayList<String>();
+		return new ResponseEntity<List<String>>(res, HttpStatus.BAD_REQUEST);	
 	}
 	
 	public Connections convertToConnection(String host, Integer port, String user, String pass, String alias) {
