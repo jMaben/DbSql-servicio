@@ -19,6 +19,11 @@ public class ImpService implements IService {
 	private Connection dbCon;
 	private PreparedStatement preparedStatement;
 
+	/*
+	 * Este metodo intenta establecer una conexion, utilizando el objeto Connection que recibe.
+	 * 
+	 * @param connec
+	 */
 	private void connect(Connections connec) throws SQLException, ClassNotFoundException {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -33,6 +38,9 @@ public class ImpService implements IService {
 
 	}
 
+	/*
+	 * Este metodo desconecta o termina una conexion previamente establecida.
+	 */
 	private void disconnect() throws SQLException {
 		if (preparedStatement != null) {
 			preparedStatement.close();
@@ -42,6 +50,14 @@ public class ImpService implements IService {
 		}
 	}
 
+	/*
+	 * El siguente metedo utilizando un metodo externo establece una conexion a base de datos,
+	 * despues hace una consulta la cual la guarda en una lista y finalmente desconecta
+	 * la conexion con dicha base de datos a la cual se habia conectado.
+	 * 
+	 * @param connec
+	 * @return
+	 */
 	@Override
 	public List<String> getTablesAll(Connections connec) throws ClassNotFoundException, SQLException {
 		ResultSet rs = null;

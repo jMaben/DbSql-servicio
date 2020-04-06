@@ -25,7 +25,18 @@ public class ControlClass {
 	@Autowired
 	private IService connections;
 
-	
+	/*
+	 * El siguente metodo recibe una serie de parametros para convertirlos en un objeto Connection
+	 * utilizando un metodo externo. Para despues retornar el resultado de una consulta, de nuevo
+	 * usando un metodo externo para realizar la consulta.
+	 * 
+	 * @param host
+	 * @param port
+	 * @param user
+	 * @param pass
+	 * @param alias
+	 * @return
+	 */
 	@HystrixCommand(fallbackMethod = "alternativeMethod")
 	@CrossOrigin
 	@GetMapping("/tables/{host}/{port}/{user}/{pass}/{alias}")
@@ -37,12 +48,32 @@ public class ControlClass {
 		return new ResponseEntity<List<String>>(connections.getTablesAll(connection), HttpStatus.OK);
 	}
 
+	/*
+	 * Este es un metodo alternativo al metodo de findTablesAll, el cual retorna un bad request de Http.
+	 *
+	 * @param host
+	 * @param port
+	 * @param user
+	 * @param pass
+	 * @param alias
+	 * @return
+	 */
 	@CrossOrigin
 	public ResponseEntity<List<String>> alternativeMethod(String host, Integer port, String user, String pass, String alias) {
 		List<String> res = new ArrayList<String>();
 		return new ResponseEntity<List<String>>(res, HttpStatus.BAD_REQUEST);	
 	}
 	
+	/*
+	 * Este metodo crea un objeto Connection utilizando los parametros que se le pasan.
+	 * 
+	 * @param host
+	 * @param port
+	 * @param user
+	 * @param pass
+	 * @param alias
+	 * @return
+	 */
 	public Connections convertToConnection(String host, Integer port, String user, String pass, String alias) {
 		Connections connection = new Connections();
 		connection.setHost(host);
