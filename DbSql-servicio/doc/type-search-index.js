@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"com.app.dbsql.controller","l":"ControlClass"},{"p":"com.app.dbsql","l":"DbSqlServicioApplication"},{"p":"com.app.dbsql.service","l":"ImpService"},{"p":"com.app.dbsql.service","l":"IService"}]

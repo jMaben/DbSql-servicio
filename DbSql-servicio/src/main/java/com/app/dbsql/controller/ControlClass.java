@@ -25,7 +25,7 @@ public class ControlClass {
 	@Autowired
 	private IService connections;
 
-	/*
+	/**
 	 * El siguente metodo recibe una serie de parametros para convertirlos en un objeto Connection
 	 * utilizando un metodo externo. Para despues retornar el resultado de una consulta, de nuevo
 	 * usando un metodo externo para realizar la consulta.
@@ -48,7 +48,7 @@ public class ControlClass {
 		return new ResponseEntity<List<String>>(connections.getTablesAll(connection), HttpStatus.OK);
 	}
 
-	/*
+	/**
 	 * Este es un metodo alternativo al metodo de findTablesAll, el cual retorna un bad request de Http.
 	 *
 	 * @param host
@@ -64,7 +64,7 @@ public class ControlClass {
 		return new ResponseEntity<List<String>>(res, HttpStatus.BAD_REQUEST);	
 	}
 	
-	/*
+	/**
 	 * Este metodo crea un objeto Connection utilizando los parametros que se le pasan.
 	 * 
 	 * @param host
