@@ -17,6 +17,7 @@ import com.app.dbsql.service.IService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 import app.commons.models.entity.Connections;
+import app.commons.models.entity.Table;
 
 @Controller
 @RequestMapping("/sql")
@@ -82,5 +83,15 @@ public class ControlClass {
 		connection.setPass(pass);
 		connection.setAlias(alias);
 		return connection;
+	}
+	
+	@CrossOrigin
+	@GetMapping("/allOfTable/{host}/{port}/{user}/{pass}/{alias}/{table}")
+	public ResponseEntity<Table> findTableAllDate(@PathVariable String host, @PathVariable Integer port,
+			@PathVariable String user, @PathVariable String pass, @PathVariable String alias, @PathVariable String table)
+			throws ClassNotFoundException, SQLException {
+		Connections connection = new Connections();
+		connection = convertToConnection(host, port, user, pass, alias);
+		return new ResponseEntity<Table>(connections.getAllOneTable(connection, table), HttpStatus.OK);
 	}
 }
