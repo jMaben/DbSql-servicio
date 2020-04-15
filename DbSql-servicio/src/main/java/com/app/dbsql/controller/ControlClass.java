@@ -87,7 +87,7 @@ public class ControlClass {
 	
 	@CrossOrigin
 	@GetMapping("/allOfTable/{host}/{port}/{user}/{pass}/{alias}/{table}")
-	public ResponseEntity<Table> findTableAllDate(@PathVariable String host, @PathVariable Integer port,
+	public ResponseEntity<Table> findTableAllData(@PathVariable String host, @PathVariable Integer port,
 			@PathVariable String user, @PathVariable String pass, @PathVariable String alias, @PathVariable String table)
 			throws ClassNotFoundException, SQLException {
 		Connections connection = new Connections();
