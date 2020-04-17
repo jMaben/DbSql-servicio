@@ -9,7 +9,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @EnableCircuitBreaker
 @EnableEurekaClient
 @SpringBootApplication
-@EntityScan({"app.commons.models.entity"})
+@EntityScan({"com.springboot.app.commons.models.entity"})
 public class DbSqlServicioApplication {
 
 	/**

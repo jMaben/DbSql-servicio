@@ -10,9 +10,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import app.commons.models.entity.Column;
-import app.commons.models.entity.Connections;
-import app.commons.models.entity.Table;
+import com.springboot.app.commons.models.entity.Column;
+import com.springboot.app.commons.models.entity.Connections;
+import com.springboot.app.commons.models.entity.Table;
+
+
 
 @Service
 public class ImpService implements IService {

@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.app.dbsql.service.IService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.springboot.app.commons.models.entity.Connections;
+import com.springboot.app.commons.models.entity.Table;
 
-import app.commons.models.entity.Connections;
-import app.commons.models.entity.Table;
+
 
 @Controller
 @RequestMapping("/sql")
